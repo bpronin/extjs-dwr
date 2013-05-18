@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+
+    <dwr:controller id="dwrController" debug="true"/>
+
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="alwaysUseFullPath" value="true"/>
+        <property name="mappings">
+            <props>
+                <prop key="/dwr/**/*">dwrController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <dwr:configuration>
+        <dwr:convert type="exception" class="java.lang.Exception"/>
+        <dwr:convert type="bean" class="java.lang.StackTraceElement"/>
+        <dwr:convert type="bean" class="com.bo.StoreParams"/>
+        <dwr:convert type="bean" class="com.bo.UserExtraParams"/>
+        <dwr:convert type="bean" class="com.bo.User"/>
+        <dwr:convert type="bean" class="com.bo.Users"/>
+    </dwr:configuration>
+
+    <bean id="usersService" class="com.bo.UsersService">
+        <dwr:remote>
+            <dwr:include method="read"/>
+            <dwr:include method="create"/>
+            <dwr:include method="update"/>
+            <dwr:include method="destroy"/>
+        </dwr:remote>
+    </bean>
+
+</beans>
