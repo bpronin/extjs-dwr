@@ -74,7 +74,7 @@ Ext.define('Ext.ux.DwrProxy', {
             proxy: me
         });
 
-        request.dwrFunction = this.getUrl(request);
+        request.dwrFunction = me.getUrl(request);
         if (!request.dwrFunction) {
             Ext.Error.raise("No DWR function specified.");
         }
